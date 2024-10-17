@@ -65,14 +65,20 @@
   <body>
     <div class="upload-container">
       <h1>Upload a File</h1>
-      <form action="/upload" method="POST" enctype="multipart/form-data">
+      <form action="/files/upload" method="POST" enctype="multipart/form-data">
         <input type="file" id="file" name="file" />
-        <label for="file">Choose a file</label>
+        <label for="file" id="file-label">Choose a file</label>
         <button type="submit">Upload</button>
       </form>
       <form action="/logout" method="GET">
         <button type="submit" class="logout-button">Logout</button>
       </form>
     </div>
+    <script>
+      document.getElementById("file").addEventListener("change", function () {
+        const fileName = this.files[0].name;
+        document.getElementById("file-label").textContent = fileName;
+      });
+    </script>
   </body>
 </html>
