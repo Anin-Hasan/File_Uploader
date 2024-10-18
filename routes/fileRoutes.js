@@ -3,6 +3,7 @@ const router = express.Router();
 const { isAuth } = require("../middleware/authMiddleware");
 const multer = require("multer");
 const fileController = require("../controllers/fileController");
+const folderController = require("../controllers/folderController");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -32,5 +33,21 @@ router.post(
   upload.single("file"),
   fileController.uploadFile
 );
+
+router.get("/folders", isAuth, folderController.getFolders);
+router.post("/folders", isAuth, folderController.createFolder);
+router.get("/folders/:id", isAuth, folderController.getFolder);
+router.put("/folders/:id", isAuth, folderController.updateFolder);
+router.delete("/folders/:id", isAuth, folderController.deleteFolder);
+
+router.post(
+  "/folders/:folderId/upload",
+  isAuth,
+  upload.single("file"),
+  fileController.uploadFileToFolder
+);
+
+router.delete("/files/:id", isAuth, fileController.deleteFile);
+router.get("/download/:id", isAuth, fileController.downloadFile);
 
 module.exports = router;

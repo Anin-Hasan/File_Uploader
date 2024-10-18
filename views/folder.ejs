@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Folder: <%= folder.name %></title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 800px;
+        width: 100%;
+      }
+      .container h2 {
+        margin-bottom: 20px;
+        color: #333;
+        font-size: 2em;
+      }
+      .container h3 {
+        margin-bottom: 20px;
+        color: #555;
+        font-size: 1em;
+      }
+      .container ul {
+        list-style-type: none;
+        padding: 0;
+        margin-bottom: 20px;
+      }
+      .container li {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f1f1f1;
+        padding: 10px;
+        border-radius: 5px;
+      }
+      .container li a {
+        text-decoration: none;
+        color: #007bff;
+        margin-right: 10px;
+      }
+      .container li a:hover {
+        text-decoration: underline;
+      }
+      .container li button {
+        padding: 5px 10px;
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+      .container li button:hover {
+        background-color: #c82333;
+        transform: translateY(-2px);
+      }
+      .upload-section {
+        margin-bottom: 20px;
+      }
+      .upload-section form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .upload-section input[type="file"] {
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+      }
+      .upload-section button[type="submit"] {
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+      }
+      .upload-section button[type="submit"]:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+      }
+      .back-link {
+        margin-top: 20px;
+        text-decoration: none;
+        color: #007bff;
+      }
+      .back-link:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2><%= folder.name %></h2>
+
+      <h3>Files:</h3>
+      <ul>
+        <% folder.files.forEach(file => { %>
+        <li>
+          <div>
+            <strong><%= file.name %></strong> (<%= (file.size / 1024).toFixed(2)
+            %> KB)
+          </div>
+          <div>
+            <a href="/files/download/<%= file.id %>">Download</a>
+            <form
+              action="/files/files/<%= file.id %>?_method=DELETE"
+              method="POST"
+              style="display: inline"
+            >
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        </li>
+        <% }) %>
+      </ul>
+
+      <div class="upload-section">
+        <h3>Upload a new file:</h3>
+        <form
+          action="/files/folders/<%= folder.id %>/upload"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <input type="file" name="file" required />
+          <button type="submit">Upload</button>
+        </form>
+      </div>
+
+      <a href="/files/folders" class="back-link">Back to folder list</a>
+    </div>
+  </body>
+</html>

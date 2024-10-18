@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Folders</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f8f9fa;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        flex-direction: column;
+      }
+      .container {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 400px;
+        text-align: center;
+      }
+      .container h2 {
+        margin-bottom: 20px;
+        color: #333;
+      }
+      .container ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      .container li {
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .container a {
+        text-decoration: none;
+        color: #007bff;
+      }
+      .container a:hover {
+        text-decoration: underline;
+      }
+      .container button {
+        padding: 5px 10px;
+        background-color: #dc3545;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .container button:hover {
+        background-color: #c82333;
+      }
+      .container form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+      .container input[type="text"] {
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 100%;
+      }
+      .container button[type="submit"] {
+        padding: 10px 20px;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .container button[type="submit"]:hover {
+        background-color: #218838;
+      }
+      .logout-button {
+        padding: 10px 20px;
+        background-color: #ffc107;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .logout-button:hover {
+        background-color: #e0a800;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Folders</h2>
+      <ul>
+        <% folders.forEach(folder => { %>
+        <li>
+          <a href="/files/folders/<%= folder.id %>"><%= folder.name %></a>
+          <form
+            action="/files/folders/<%= folder.id %>?_method=DELETE"
+            method="POST"
+            style="display: inline"
+          >
+            <input type="hidden" name="_method" value="DELETE" />
+            <button type="submit">Delete</button>
+          </form>
+        </li>
+        <% }) %>
+      </ul>
+
+      <h2>Create New Folder</h2>
+      <form action="/files/folders" method="POST">
+        <input type="text" name="name" required placeholder="Folder Name" />
+        <button type="submit">Create Folder</button>
+      </form>
+      <form action="/logout" method="GET">
+        <button type="submit" class="logout-button">Logout</button>
+      </form>
+    </div>
+  </body>
+</html>

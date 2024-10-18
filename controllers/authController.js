@@ -10,7 +10,7 @@ exports.register = async (req, res) => {
 };
 
 exports.login = (req, res) => {
-  res.redirect("/files/upload");
+  res.redirect("/files/folders");
 };
 
 exports.logout = (req, res, next) => {
